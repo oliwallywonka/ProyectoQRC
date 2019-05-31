@@ -48,11 +48,11 @@
     <ul class="dropdown-menu" style="display: block;">
 
          <li class="nav-item dropdown">
-                <a class="sidebar-link {{ starts_with($route, ADMIN . '.users') ? 'active' : '' }}" href="{{ route(ADMIN . '.shoes.index') }}">
+                <a class="sidebar-link {{ starts_with($route, ADMIN . '.users') ? 'active' : '' }}" href="{{ route(ADMIN . '.model_shoes.index') }}">
                         <span class="icon-holder">
                             <i class="c-red-500 ti-user"></i>
                          </span>
-                        <span class="title">Inventario</span>
+                        <span class="title">Modelos</span>
                 </a>
         </li>
 

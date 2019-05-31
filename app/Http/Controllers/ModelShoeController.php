@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model_shoe;
+use App\Category;
+use App\Brand;
 use Illuminate\Http\Request;
 
 class ModelShoeController extends Controller
@@ -14,7 +16,9 @@ class ModelShoeController extends Controller
      */
     public function index()
     {
-        //
+        $model_shoes = Model_shoe::all();
+
+        return view('admin.shoes.index',['model_shoes'=>$model_shoes]);
     }
 
     /**

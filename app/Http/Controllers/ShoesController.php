@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Shoes;
+
 use Illuminate\Http\Request;
 
 class ShoesController extends Controller
@@ -14,7 +16,9 @@ class ShoesController extends Controller
      */
     public function index()
     {
-        //
+        $shoes = Shoes::all();
+
+        return view('admin.shoes.index',['shoes'=>$shoes]);
     }
 
     /**
