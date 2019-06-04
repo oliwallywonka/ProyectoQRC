@@ -4,11 +4,24 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    public function admin (){
+        return $this->hasMany(Admin::class,'id');
+    }
+
+    public function cashier(){
+        return $this->hasMany(Cashier::class,'id');
+    }
+
+    public function seller(){
+        return $this->hasMany(Seller::class,'id');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -70,13 +83,13 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    
+
     public function getAvatarAttribute($value)
     {
         if (!$value) {
             return 'http://placehold.it/160x160';
         }
-    
+
         return config('variables.avatar.public').$value;
     }
     public function setAvatarAttribute($photo)
@@ -94,7 +107,7 @@ class User extends Authenticatable
         parent::boot();
         static::updating(function ($user) {
             $original = $user->getOriginal();
-            
+
             if (\Hash::check('', $user->password)) {
                 $user->attributes['password'] = $original['password'];
             }

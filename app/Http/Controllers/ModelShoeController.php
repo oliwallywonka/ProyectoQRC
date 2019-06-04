@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Model_shoe;
 use App\Category;
 use App\Brand;
+use App\Shoes;
+use App\Color;
+use App\Size;
 use Illuminate\Http\Request;
 
 class ModelShoeController extends Controller
@@ -15,10 +18,15 @@ class ModelShoeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $model_shoes = Model_shoe::all();
+    {   $categories = Category::all();
+        $brands = Brand::all();
+        $model_shoes = Model_shoe::with('category','brand')->get();
 
-        return view('admin.shoes.index',['model_shoes'=>$model_shoes]);
+        return view('admin.model_shoes.index',[
+            'model_shoes'=>$model_shoes,
+            'categories'=>$categories,
+            'brands'=>$brands
+        ]);
     }
 
     /**
@@ -28,7 +36,9 @@ class ModelShoeController extends Controller
      */
     public function create()
     {
-        //
+
+
+
     }
 
     /**
@@ -39,7 +49,15 @@ class ModelShoeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model_shoe = new Model_shoe;
+        $model_shoe->id_brand = $request->id_brand;
+        $model_shoe->id_category = $request->id_category;
+        $model_shoe->model = $request->model;
+        $model_shoe->ref_price = $request->ref_price;
+        $model_shoe->save();
+
+        return redirect()->route('admin.model_shoes.index');
+
     }
 
     /**

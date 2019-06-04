@@ -20,7 +20,7 @@ class CreateModelShoesTable extends Migration
             $table->unsignedInteger('id_brand');
             $table->foreign('id_brand')->references('id')->on('brands');
             $table->string('model',20);
-            $table->string('qr_code');
+            $table->string('qr_code')->nullable();
             $table->decimal('ref_price',8,2);
             $table->timestamps();
         });
