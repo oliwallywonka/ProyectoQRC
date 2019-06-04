@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Shoes;
+use App\Size;
+use App\Color;
 
 use Illuminate\Http\Request;
 
@@ -16,9 +18,15 @@ class ShoesController extends Controller
      */
     public function index()
     {
-        $shoes = Shoes::all();
+        $colors = Color::all();
+        $sizes = Size::all();
+        $shoes = Shoes::with('size','color')->where('id_model_shoe',$id_model_shoe)->get();
 
-        return view('admin.shoes.index',['shoes'=>$shoes]);
+        return view('admin.shoes.index',[
+            'shoes'=>$shoes,
+            'colors'=>$colors,
+            'sizes'=>$sizes
+            ]);
     }
 
     /**
@@ -39,7 +47,7 @@ class ShoesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ($request);
     }
 
     /**
@@ -48,9 +56,17 @@ class ShoesController extends Controller
      * @param  \App\Shoes  $shoes
      * @return \Illuminate\Http\Response
      */
-    public function show(Shoes $shoes)
+    public function show($id_model_shoe)
     {
-        //
+        $colors = Color::all();
+        $sizes = Size::all();
+        $shoes = Shoes::with('size','color')->where('id_model_shoe',$id_model_shoe)->get();
+
+        return view('admin.shoes.index',[
+            'shoes'=>$shoes,
+            'colors'=>$colors,
+            'sizes'=>$sizes
+            ]);
     }
 
     /**

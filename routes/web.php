@@ -19,6 +19,7 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware'=>['auth', 'Ro
     Route::resource('purchases', 'PurchaseController');
     Route::resource('wholesellers', 'WholesellerController');
     Route::resource('model_shoes', 'ModelShoeController');
+    Route::resource('shoes', 'ShoesController');
 });
 
 Route::get('/', function () {

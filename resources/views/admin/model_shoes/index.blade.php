@@ -51,7 +51,7 @@
 
                         <div class="peer">
 
-                            <a href="" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
+                            <a href="{{ route('admin.shoes.show',$m->id) }}" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
                             <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
 
                         </div>

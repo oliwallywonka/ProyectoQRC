@@ -15,12 +15,12 @@ class CreateShoesTable extends Migration
     {
         Schema::create('shoes', function (Blueprint $table) {
             $table->Increments('id');
-            
+            $table->unsignedInteger('id_model_shoe');
+            $table->foreign('id_model_shoe')->references('id')->on('model_shoes');
             $table->unsignedInteger('id_size');
             $table->foreign('id_size')->references('id')->on('sizes');
             $table->unsignedInteger('id_color');
             $table->foreign('id_color')->references('id')->on('colors');
-            $table->decimal('ref_price',8,2);
             $table->string('description')->nullable();
             $table->string('photo')->nullable();
 
