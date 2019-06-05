@@ -36,28 +36,31 @@
             </div>
 
             @foreach ($shoes as $s)
+                @foreach ($colors as $c)
+                    @if ($s->color->id != $c->id)
+                    <div class="col-3">
+                            <div class="bgc-white bd bdrs-3p p-20 mB-20">
+                                <div class="peer mR-10">
+                                    <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
+                                </div>
 
-            <div class="col-3">
-                    <div class="bgc-white bd bdrs-3p p-20 mB-20">
-                        <div class="peer mR-10">
-                            <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
+                                <div>Color: {{$s->color->color}}</div>
+                                <div>Precio de Referencia: {{$s->ref_price}} Bs.</div>
+                                <div>Tallas: </div>
+                                @foreach ($shoes as $s)
+                                    <div>{{$s->size->size}}</div>
+                                @endforeach
+
+                                <div class="peer">
+
+                                    <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
+
+                                </div>
+                            </div>
                         </div>
+                    @endif
+                @endforeach
 
-                        <div>Color: {{$s->color->color}}</div>
-                        <div>Precio de Referencia: {{$m->ref_price}} Bs.</div>
-                        <div>Tallas: </div>
-                        @foreach ($s->size as $si)
-                            <div>{{$si->size}}</div>
-                        @endforeach
-
-                        <div class="peer">
-
-                            <a href="{{ route('admin.shoes.index',$m->id) }}" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
-                            <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
-
-                        </div>
-                    </div>
-                </div>
 
             @endforeach
 
@@ -77,6 +80,7 @@
                         <div class="form-group">
                         <form action="{{route('admin.shoes.store')}}" method="POST">
                             @csrf
+                            <input type="hidden" name="id_model_shoe" value="{{$id_model_shoe}}">
                             <label class=" form-control-label" for="color">Zapatos</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class=""></i></div>
@@ -107,7 +111,7 @@
                                             <div class="row">
                                                 @foreach ($sizes as $s)
                                                     <label class="form-check-label col-6">
-                                                        <input name="id_size" value="{{$s->id}}" class="form-check-input" type="checkbox"> {{$s->size}}
+                                                        <input name="id_size[]" value="{{$s->id}}" class="form-check-input" type="checkbox"> {{$s->size}}
                                                     </label>
                                                 @endforeach
                                             </div>

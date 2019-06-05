@@ -12,12 +12,12 @@ class Shoes extends Model
     }
 
     public function size(){
-        return $this->belongsTo(Size::class,'id');
+        return $this->belongsTo(Size::class,'id_size');
 
     }
 
     public function color(){
-        return $this->belongsTo(Color::class,'id');
+        return $this->belongsTo(Color::class,'id_color');
     }
 
     public function sell_detail(){
