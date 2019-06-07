@@ -87,8 +87,10 @@ class ShoesController extends Controller
     {
         $colors = Color::all();
         $sizes = Size::all();
+        $shoes2 = Shoes::all()->where('id_model_shoe',$id_model_shoe)->groupBy('id_color');
         $shoes = Shoes::with('color','size')->where('id_model_shoe',$id_model_shoe)
-                                            ->get();
+                                            ->get()->groupBy('id_color');
+
 
         return view('admin.shoes.index',[
             'shoes'=>$shoes,
@@ -96,6 +98,8 @@ class ShoesController extends Controller
             'sizes'=>$sizes,
             'id_model_shoe'=>$id_model_shoe
             ]);
+        //    return($shoes);
+
     }
 
     /**

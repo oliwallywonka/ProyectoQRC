@@ -17,29 +17,21 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-3">
-                <div class="bgc-white bd bdrs-3p p-20 mB-20">
-                    <div class="peer mR-10">
-                        <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
-                    </div>
 
-                    <div>Modelo:</div>
-                    <div>Precio de Referencia:</div>
-                    <div>Marca:</div>
-                    <div>Categoria:</div>
-                    <div class="peer">
-
-                        <a href="" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
-                        <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
-
-                    </div>
-                </div>
-            </div>
 
             @foreach ($model_shoes as $m)
 
             <div class="col-3">
+
                     <div class="bgc-white bd bdrs-3p p-20 mB-20">
+                        <div class="peer ">
+                            <div class="row">
+                                <a href="" class="btn cur-p btn-outline-primary col col-6">Editar</a>
+                                <a href="" class="btn cur-p btn-outline-danger col col-6">Eliminar</a>
+                            </div>
+
+                        </div>
+                        <br>
                         <div class="peer mR-10">
                             <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
                         </div>
@@ -51,12 +43,12 @@
 
                         <div class="peer">
 
-                            <a href="{{ route('admin.shoes.show',$m->id) }}" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
-                            <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
+                            <a href="{{ route('admin.shoes.show',$m->id) }}" class="btn cur-p btn-outline-primary col col-12">Tallas y Colores</a>
+                            <a href="" class="btn cur-p btn-primary col col-12">Imprimir Qr</a>
 
                         </div>
                     </div>
-                </div>
+            </div>
 
             @endforeach
 
@@ -116,7 +108,7 @@
                             <br>
                             <div class="group-material">
                                     <span>Fotografia</span>
-                                    <input type="file" name="photo">
+                                    <input type="file" name="photo" class="form_control">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary" ><i class="fa fa-envolve-0"></i>&nbsp; Guardar</button>

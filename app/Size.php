@@ -9,8 +9,8 @@ class Size extends Model
     protected $fillable=['size'];
 
     public function shoes(){
-        return $this->hasMany(Shoes::class,'id');
+        return $this->hasMany(Shoes::class,'id_size','id');
     }
-
+    
 
 }

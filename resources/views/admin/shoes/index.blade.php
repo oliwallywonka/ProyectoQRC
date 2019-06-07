@@ -16,50 +16,31 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-3">
-                <div class="bgc-white bd bdrs-3p p-20 mB-20">
-                    <div class="peer mR-10">
-                        <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
-                    </div>
-
-                    <div>Modelo:</div>
-                    <div>Precio de Referencia:</div>
-                    <div>Marca:</div>
-                    <div>Categoria:</div>
-                    <div class="peer">
-
-                        <a href="" class="btn cur-p btn-outline-info col col-12">Tallas y Colores</a>
-                        <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
-
-                    </div>
-                </div>
-            </div>
+            
 
             @foreach ($shoes as $s)
-                @foreach ($colors as $c)
-                    @if ($s->color->id != $c->id)
-                    <div class="col-3">
-                            <div class="bgc-white bd bdrs-3p p-20 mB-20">
-                                <div class="peer mR-10">
-                                    <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
-                                </div>
-
-                                <div>Color: {{$s->color->color}}</div>
-                                <div>Precio de Referencia: {{$s->ref_price}} Bs.</div>
-                                <div>Tallas: </div>
-                                @foreach ($shoes as $s)
-                                    <div>{{$s->size->size}}</div>
-                                @endforeach
-
-                                <div class="peer">
-
-                                    <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
-
-                                </div>
-                            </div>
+                <div class="col-3">
+                    <div class="bgc-white bd bdrs-3p p-20 mB-20">
+                        <div class="peer mR-10">
+                            <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
                         </div>
-                    @endif
-                @endforeach
+
+                        <div>Color: {{$s[0]->color->color}}</div>
+                        <div>Precio de Referencia:  Bs.</div>
+                        <div>Tallas: </div>
+
+                        @foreach ($s as $item=>$n)
+                                 <div>{{ $n->size->size}}</div>
+                        @endforeach
+
+                        <div class="peer">
+
+                            <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
+
+                        </div>
+                    </div>
+                </div>
+
 
 
             @endforeach

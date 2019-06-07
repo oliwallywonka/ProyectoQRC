@@ -9,6 +9,7 @@ class Color extends Model
     protected $fillable=["color"];
 
     public function shoes(){
-        return $this->hasMany(Shoes::class,'id');
+        return $this->hasMany(Shoes::class,'id_color');
     }
+    
 }

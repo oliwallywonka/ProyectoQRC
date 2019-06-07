@@ -9,6 +9,6 @@ class Category extends Model
     protected $fillable =['description'];
 
     public function model_shoe(){
-        return $this->hasMany(Model_shoe::class,'id');
+        return $this->hasMany(Model_shoe::class,'id_category');
     }
 }

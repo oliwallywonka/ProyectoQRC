@@ -8,6 +8,7 @@ use App\Brand;
 use App\Shoes;
 use App\Color;
 use App\Size;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 
 class ModelShoeController extends Controller
@@ -50,13 +51,22 @@ class ModelShoeController extends Controller
     public function store(Request $request)
     {
         $model_shoe = new Model_shoe;
+
         $model_shoe->id_brand = $request->id_brand;
         $model_shoe->id_category = $request->id_category;
         $model_shoe->model = $request->model;
         $model_shoe->ref_price = $request->ref_price;
-        $model_shoe->save();
+        //$file = $request->file('photo')->getClientOriginalName();
+        $file = $request->file('photo');
+        $model_shoe->photo = $file;
+        //$model_shoe->save();
 
-        return redirect()->route('admin.model_shoes.index');
+        $model_shoe->all()->last();
+
+        $qr= QrCode::size(300)->generate("'http://127.0.0.1:8000/admin/shoes/'.$model_shoe->id");
+
+       // return redirect()->route('admin.model_shoes.index');
+       return($qr);
 
     }
 
@@ -104,4 +114,6 @@ class ModelShoeController extends Controller
     {
         //
     }
+
+
 }
