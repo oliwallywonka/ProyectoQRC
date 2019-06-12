@@ -87,7 +87,7 @@ class ColorController extends Controller
     {
         $color = Color::findOrFail($id);
         $color->color = $request->input('color');
-        if($reques=null){
+        if($request=null){
             return back()->with('warning','No pueden ir campos vacios');
         }else{
             $color->save();
@@ -108,7 +108,7 @@ class ColorController extends Controller
     {
         $color = Color::find($id);
         $color->delete();
-        return redirect()->route('admin.colors.index');
+        return redirect()->route('admin.colors.index')->with('success','Color eliminado exitosamente');
         /*$color->delete();
         return response()->json(null,204);*/
     }

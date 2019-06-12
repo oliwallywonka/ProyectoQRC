@@ -22,6 +22,12 @@ Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware'=>['auth', 'Ro
     Route::resource('shoes', 'ShoesController');
 });
 
+Route::group(['prefix' => ADMIN, 'as' => ADMIN . '.', 'middleware'=>['auth', 'Role:0']], function () {
+    Route::get('/','ModelShoeController@index')->name('dash');
+    Route::resource('model_shoes', 'ModelShoeController');
+    Route::resource('shoes', 'ShoesController');
+});
+
 Route::get('/', function () {
     return view('auth.login');
 });

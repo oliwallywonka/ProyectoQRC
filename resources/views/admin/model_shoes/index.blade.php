@@ -27,13 +27,22 @@
                         <div class="peer ">
                             <div class="row">
                                 <a href="" class="btn cur-p btn-outline-primary col col-6">Editar</a>
-                                <a href="" class="btn cur-p btn-outline-danger col col-6">Eliminar</a>
+                                {!! Form::open([
+                                    'class'=>'delete col col-6',
+                                    'url'  => route(ADMIN . '.model_shoes.destroy', $m->id),
+                                    'method' => 'DELETE',
+                                    ])
+                                !!}
+
+                                    <button class="btn cur-p btn-outline-danger col-12" >Eliminar</button>
+
+                                {!! Form::close() !!}
                             </div>
 
                         </div>
                         <br>
                         <div class="peer mR-10">
-                            <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
+                            <img  class=" bdrs-3p col col-12" src="/storage/model_image/{{$m->photo}}" alt="">
                         </div>
 
                         <div>Modelo: {{$m->model}}</div>
@@ -66,7 +75,7 @@
 
                     <div class="modal-body">
                         <div class="form-group">
-                        <form action="{{route('admin.model_shoes.store')}}" method="POST">
+                        <form action="{{route('admin.model_shoes.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <label class=" form-control-label" for="color">MODELOS</label>
                             <div class="input-group">

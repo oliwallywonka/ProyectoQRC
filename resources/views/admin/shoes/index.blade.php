@@ -16,26 +16,37 @@
     <div class="container-fluid">
         <div class="row">
 
-            
+
 
             @foreach ($shoes as $s)
                 <div class="col-3">
                     <div class="bgc-white bd bdrs-3p p-20 mB-20">
                         <div class="peer mR-10">
-                            <img  class=" bdrs-3p col col-12" src="/images/tienda2.jpg" alt="">
+                            <img  class=" bdrs-3p col col-12" src="/storage/shoe_image/{{$s[0]->photo}}" alt="">
                         </div>
 
                         <div>Color: {{$s[0]->color->color}}</div>
-                        <div>Precio de Referencia:  Bs.</div>
+                        <div>Precio de Referencia: {{$s[0]->model_shoes->ref_price}} Bs.</div>
                         <div>Tallas: </div>
 
                         @foreach ($s as $item=>$n)
                                  <div>{{ $n->size->size}}</div>
                         @endforeach
 
-                        <div class="peer">
+                        <div class="peer ">
+                            <div class="row">
+                                <a href="" class="btn cur-p btn-outline-primary col col-6">Editar</a>
+                                {!! Form::open([
+                                    'class'=>'delete col col-6',
+                                    'url'  => route(ADMIN . '.shoes.destroy',$s),
+                                    'method' => 'DELETE',
+                                    ])
+                                !!}
 
-                            <a href="" class="btn cur-p btn-info col col-12">Imprimir Qr</a>
+                                    <button class="btn cur-p btn-outline-danger col-12" >Eliminar</button>
+
+                                {!! Form::close() !!}
+                            </div>
 
                         </div>
                     </div>
@@ -59,22 +70,17 @@
 
                     <div class="modal-body">
                         <div class="form-group">
-                        <form action="{{route('admin.shoes.store')}}" method="POST">
+                        <form action="{{route('admin.shoes.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id_model_shoe" value="{{$id_model_shoe}}">
-                            <label class=" form-control-label" for="color">Zapatos</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class=""></i></div>
-                                <input class="form-control" name="model" type="text">
-                            </div>
-                            <small class="form-text text-muted">ex. NIKE URBAN</small>
 
-                            <label class=" form-control-label" for="color">PRECIO DE REFERENCIA</label>
+
+                            <label class=" form-control-label" for="color">DESCRIPCIÓN</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class=""></i></div>
-                                <input class="form-control" name="ref_price" type="int">
+                                <input class="form-control" name="description" type="int">
                             </div>
-                            <small class="form-text text-muted">ex. 399</small>
+                            <small class="form-text text-muted">ex. Color limitado</small>
 
                             <div class="group-material">
                                     <span>COLORES</span>

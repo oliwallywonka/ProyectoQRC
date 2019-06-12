@@ -10,7 +10,7 @@ class Model_shoe extends Model
     protected $fillable=["model","qr_code","ref_price","photo","id_brand","id_category"];
 
     public function shoes(){
-        return $this->hasMany(Shoes::class,'id_model');
+        return $this->hasMany(Shoes::class,'id_model_shoe');
     }
 
     public function brand(){
@@ -19,6 +19,10 @@ class Model_shoe extends Model
 
     public function category(){
         return $this->belongsTo(Category::class,'id_category');
+    }
+
+    public function getUrlPhotoAttribute(){
+        return \Storage::url($this->photo);
     }
 
 }

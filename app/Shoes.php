@@ -8,7 +8,7 @@ class Shoes extends Model
 {
 
     public function model_shoes(){
-        return $this->belongsTo(Model_shoes::class,'id_shoes','id');
+        return $this->belongsTo(Model_shoe::class,'id_model_shoe');
     }
 
     public function size(){

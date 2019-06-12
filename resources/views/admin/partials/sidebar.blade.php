@@ -29,7 +29,13 @@
 
 		<!-- ### $Sidebar Menu ### -->
 		<ul class="sidebar-menu scrollable pos-r">
-			@include('admin.partials.menu')
+
+            @if (auth()->user()->role == '10')
+                @include('admin.partials.menu')
+            @else
+                @include('admin.partials.menu2')
+            @endif
+
 		</ul>
 	</div>
 </div>

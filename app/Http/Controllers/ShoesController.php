@@ -63,18 +63,31 @@ class ShoesController extends Controller
         }*/
 
         //return redirect()->route('admin.shoes.show',$request->id_model_shoe);
+        $request->validate([
+            'id_size' => 'required',
+            'id_color' =>'required',
+            'photo' => 'required|image',
+            'description' => 'required'
+
+
+        ]);
+
+        $file = $request->file('photo')->getClientOriginalName();
+        $image =$request->file('photo')->storeAs('shoe_image',$file);
         $length =count($request->id_size);
         for($i = 0; $i<$length; $i++ ){
 
             DB::table('shoes')->insert([
                 ['id_model_shoe'=>$request->id_model_shoe,
                  'id_size'=>$request->id_size[$i],
-                 'id_color'=>$request->id_color
+                 'id_color'=>$request->id_color,
+                 'description' => $request->description,
+                 'photo' => $file
                 ]
             ]);
         }
 
-        return redirect()->route('admin.shoes.show',$request->id_model_shoe);
+        return redirect()->route('admin.shoes.show',$request->id_model_shoe)->with('success','Color creado correctamente');
     }
 
     /**
@@ -87,9 +100,10 @@ class ShoesController extends Controller
     {
         $colors = Color::all();
         $sizes = Size::all();
-        $shoes2 = Shoes::all()->where('id_model_shoe',$id_model_shoe)->groupBy('id_color');
-        $shoes = Shoes::with('color','size')->where('id_model_shoe',$id_model_shoe)
-                                            ->get()->groupBy('id_color');
+        $shoes = Shoes::with('color','size','model_shoes')
+                        ->where('id_model_shoe',$id_model_shoe)
+                        ->get()
+                        ->groupBy('id_color');
 
 
         return view('admin.shoes.index',[
@@ -98,7 +112,7 @@ class ShoesController extends Controller
             'sizes'=>$sizes,
             'id_model_shoe'=>$id_model_shoe
             ]);
-        //    return($shoes);
+           //return($shoes);
 
     }
 
@@ -133,6 +147,12 @@ class ShoesController extends Controller
      */
     public function destroy(Shoes $shoes)
     {
-        //
+        $shoe = Shoes::where('id_model_shoe' ,$shoes->id_model_shoe)
+                      ->where('id_color',$shoes->id_color)
+                      ->get()
+                      ->toArray();
+        $deleted = Shoes::destroy($shoe);
+        //return redirect()->back()->with('success','Elemento eliminado correctamente');
+        return ($shoe);
     }
 }
