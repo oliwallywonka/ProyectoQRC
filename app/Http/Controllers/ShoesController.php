@@ -9,6 +9,7 @@ use App\Color;
 use App\Model_shoes;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 class ShoesController extends Controller
@@ -145,14 +146,23 @@ class ShoesController extends Controller
      * @param  \App\Shoes  $shoes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shoes $shoes)
+    public function destroy($id)
     {
-        $shoe = Shoes::where('id_model_shoe' ,$shoes->id_model_shoe)
-                      ->where('id_color',$shoes->id_color)
-                      ->get()
-                      ->toArray();
-        $deleted = Shoes::destroy($shoe);
-        //return redirect()->back()->with('success','Elemento eliminado correctamente');
-        return ($shoe);
+        $shoe = Shoes::find($id);
+
+        $shoes = Shoes::where('id_model_shoe' ,$shoe->id_model_shoe)
+                        ->where('id_color',$shoe->id_color)->get();
+        foreach($shoes as $s){
+
+            $ids[]=$s->id;
+
+        }
+
+        Storage::delete('shoe_image/'.$shoe->photo);
+        $deleted = Shoes::destroy($ids);
+
+
+        return redirect()->back()->with('success','Elemento eliminado correctamente');
+        //return ($ids);
     }
 }

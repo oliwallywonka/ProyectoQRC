@@ -26,7 +26,7 @@
                     <div class="bgc-white bd bdrs-3p p-20 mB-20">
                         <div class="peer ">
                             <div class="row">
-                                <a href="" class="btn cur-p btn-outline-primary col col-6">Editar</a>
+                                <a href="{{route('admin.model_shoes.edit',$m->id)}}" class="btn cur-p btn-outline-primary col col-6">Editar</a>
                                 {!! Form::open([
                                     'class'=>'delete col col-6',
                                     'url'  => route(ADMIN . '.model_shoes.destroy', $m->id),
@@ -34,7 +34,7 @@
                                     ])
                                 !!}
 
-                                    <button class="btn cur-p btn-outline-danger col-12" >Eliminar</button>
+                                    <button class="btn cur-p btn-outline-danger col-12" onclick="return confirm('Esta seguro que desea eliminar este modelo y todas sus tallas y colores asociados')">Eliminar</button>
 
                                 {!! Form::close() !!}
                             </div>
@@ -53,7 +53,7 @@
                         <div class="peer">
 
                             <a href="{{ route('admin.shoes.show',$m->id) }}" class="btn cur-p btn-outline-primary col col-12">Tallas y Colores</a>
-                            <a href="" class="btn cur-p btn-primary col col-12">Imprimir Qr</a>
+                            <a href="{{ route('admin.model_shoes.show',$m->id)}}" class="btn cur-p btn-primary col col-12">Imprimir Qr</a>
 
                         </div>
                     </div>

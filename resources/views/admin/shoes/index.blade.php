@@ -38,12 +38,15 @@
                                 <a href="" class="btn cur-p btn-outline-primary col col-6">Editar</a>
                                 {!! Form::open([
                                     'class'=>'delete col col-6',
-                                    'url'  => route(ADMIN . '.shoes.destroy',$s),
+                                    'url'  => route(ADMIN . '.shoes.destroy',$s[0]->id),
                                     'method' => 'DELETE',
                                     ])
                                 !!}
 
-                                    <button class="btn cur-p btn-outline-danger col-12" >Eliminar</button>
+                                    <button class="btn cur-p btn-outline-danger col-12"
+                                            onclick="return confirm('Esta seguro que desea eliminar este color y sus tallas asociadas?')" >
+                                            Eliminar
+                                    </button>
 
                                 {!! Form::close() !!}
                             </div>

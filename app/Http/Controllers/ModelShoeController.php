@@ -8,6 +8,8 @@ use App\Brand;
 use App\Shoes;
 use App\Color;
 use App\Size;
+
+use Barryvdh\DomPDF\Facade;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -75,9 +77,10 @@ class ModelShoeController extends Controller
 
         $model_shoe = Model_shoe::all()->last();
 
-        $qr= QrCode::size(1000)
+        $qr= QrCode::size(500)
                     ->format('png')
-                    ->generate("http://127.0.0.1:8000/admin/shoes/.$model_shoe->id",public_path('images/model_images/qrcode'.$model_shoe->id.'.png'));
+                    ->generate("http://127.0.0.1:8000/admin/shoes/$model_shoe->id",
+                    public_path('images/model_images/qrcode'.$model_shoe->id.'.png'));
         //$qr_code = $qr->store('model_image');
 
 
@@ -97,9 +100,17 @@ class ModelShoeController extends Controller
      * @param  \App\Model_shoe  $model_shoe
      * @return \Illuminate\Http\Response
      */
-    public function show(Model_shoe $model_shoe)
+    public function show($id)
     {
-        //
+        $model_shoes = Model_shoe::with('category','brand')
+                                  ->where('id',$id)
+                                  ->get();
+        $pdf = \PDF::loadView('admin.model_shoes.qrpdf',[
+                             'model_shoes' =>$model_shoes
+                             ])->setPaper('A5');
+
+        return $pdf->stream();
+        //return ($model_shoes);
     }
 
     /**
@@ -108,9 +119,17 @@ class ModelShoeController extends Controller
      * @param  \App\Model_shoe  $model_shoe
      * @return \Illuminate\Http\Response
      */
-    public function edit(Model_shoe $model_shoe)
+    public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $brands = Brand::all();
+        $model_shoes = Model_shoe::find($id);
+        return view('admin.model_shoes.edit',[
+                    
+                    'model_shoes' => $model_shoes,
+                    'categories' => $categories,
+                    'brands' => $brands
+        ]);
     }
 
     /**
@@ -134,17 +153,41 @@ class ModelShoeController extends Controller
     public function destroy($id)
     {
         $model_shoe = Model_Shoe::find($id);
-        $shoe = Shoes::where('id_model_shoe' ,$id)->get()->toArray();
 
-        Storage::delete($shoe->photo);
+        $shoes = Shoes::where('id_model_shoe' ,$id)->get();
 
-        $delete = Shoes::destroy($shoe);
+        Storage::delete('model_image/'.$model_shoe->photo);
 
-        //$model_shoe->delete();
+        if($shoes == '[]'){
 
-        //return redirect()->route('admin.model_shoes.index')->with('success','Elemento eliminado exitosamente');
+            \File::delete('images/model_imager/qrcode'.$model_shoe->id.'.png');
 
-        return ($delete);
+            $model_shoe->delete();
+
+        }else{
+
+            foreach($shoes as $s){
+
+                $ids[]=$s->id;
+                Storage::delete('shoe_image/'.$s->photo);
+
+            }
+
+            $delete = Shoes::destroy($ids);
+
+            \File::delete('images/model_images/qrcode'.$model_shoe->id.'.png');
+
+            $model_shoe->delete();
+
+        }
+
+
+
+
+
+        return redirect()->route('admin.model_shoes.index')->with('success','Elemento eliminado exitosamente');
+
+        //return ($id);
 
     }
 
